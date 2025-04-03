@@ -1,0 +1,34 @@
+#!/bin/bash
+
+# Function to print messages
+print_message() {
+    echo "===================================="
+    echo "$1"
+    echo "===================================="
+}
+
+# Step 1: Update /etc/apt/sources.list to use UK mirror
+print_message "Updating package sources to use UK mirror..."
+sudo sed -i 's|http://.*.archive.ubuntu.com/ubuntu/|http://gb.archive.ubuntu.com/ubuntu/|g' /etc/apt/sources.list
+
+# Step 2: Update package list
+print_message "Updating package list..."
+sudo apt-get update
+
+# Step 3: Upgrade all installed packages to their latest versions
+print_message "Upgrading installed packages..."
+sudo apt-get upgrade -y
+
+# Step 4: Dist-upgrade to handle dependencies intelligently
+print_message "Performing dist-upgrade..."
+sudo apt-get dist-upgrade -y
+
+# Step 5: Remove unnecessary packages
+print_message "Removing unnecessary packages..."
+sudo apt-get autoremove -y
+
+# Step 6: Clean up the package cache
+print_message "Cleaning up the package cache..."
+sudo apt-get clean
+
+print_message "Ubuntu upgrade to the latest minimal version complete."
